@@ -60,7 +60,8 @@ class UnlabeledDataset_mix(Dataset):
 
         weak = self.weak_transform(image=raw_image).float()
         strong = self.specaug(image=raw_image).float()
-        mix = (weak * self.args.lambda_mix) + (strong * (1 - self.args.lambda_mix))
+        alpha = np.random.uniform(0, 1)
+        mix = (weak * alpha) + (strong * (1 - alpha))
         
         weak = (weak - self.x_min) / self.x_range
         strong = (strong - self.x_min) / self.x_range
